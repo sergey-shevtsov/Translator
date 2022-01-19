@@ -77,6 +77,10 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchContract.View {
         }
 
         binding.searchInputLayout.setEndIconOnClickListener(searchButtonClickListener)
+        binding.searchEditText.setOnEditorActionListener { view, _, _ ->
+            searchButtonClickListener.onClick(view)
+            true
+        }
     }
 
     override fun renderData(viewState: SearchViewState) {
