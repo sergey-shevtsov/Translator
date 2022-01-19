@@ -13,6 +13,8 @@ import com.sshevtsov.translator.data.api.TranslatorApi
 import com.sshevtsov.translator.data.mappers.DataModelMapper
 import com.sshevtsov.translator.data.repositories.RepositoryImplementation
 import com.sshevtsov.translator.databinding.FragmentSearchBinding
+import com.sshevtsov.translator.presentation.clearFocus
+import com.sshevtsov.translator.presentation.hideKeyboard
 import com.sshevtsov.translator.presentation.search.adapter.SearchAdapter
 import com.sshevtsov.translator.util.SchedulersProviderImplementation
 
@@ -71,6 +73,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchContract.View {
         searchButtonClickListener = View.OnClickListener {
             //So far isOnline is always true
             presenter.getData(binding.searchEditText.text.toString(), true)
+            cancelInput()
         }
 
         binding.searchInputLayout.setEndIconOnClickListener(searchButtonClickListener)
@@ -109,6 +112,11 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchContract.View {
                 searchButtonClickListener
             )
             .show()
+    }
+
+    private fun cancelInput() {
+        hideKeyboard()
+        clearFocus()
     }
 
     override fun onDestroyView() {
