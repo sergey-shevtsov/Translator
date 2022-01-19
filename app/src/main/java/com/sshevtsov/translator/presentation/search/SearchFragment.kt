@@ -29,6 +29,8 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchContract.View {
 
     private lateinit var searchButtonClickListener: View.OnClickListener
 
+    private lateinit var errorSnackbar: Snackbar
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,6 +50,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchContract.View {
         initPresenter()
         initRecycler()
         initSearchListener()
+        initErrorSnackbar()
     }
 
     private fun initPresenter() {
@@ -73,6 +76,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchContract.View {
         searchButtonClickListener = View.OnClickListener {
             //So far isOnline is always true
             presenter.getData(binding.searchEditText.text.toString(), true)
+            hideErrorSnackbar()
             cancelInput()
         }
 
@@ -95,7 +99,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchContract.View {
                 binding.resultRecycler.isVisible = true
             }
             is SearchViewState.Error -> {
-                showErrorInSnackbar(getString(R.string.search_error_text))
+                showErrorSnackbar()
                 binding.errorFrame.isVisible = true
             }
         }
@@ -109,14 +113,24 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchContract.View {
         binding.loadingFrame.isVisible = false
     }
 
-    private fun showErrorInSnackbar(message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_INDEFINITE)
+    private fun initErrorSnackbar() {
+        errorSnackbar = Snackbar.make(
+            binding.root,
+            getString(R.string.search_error_text),
+            Snackbar.LENGTH_INDEFINITE
+        )
             .setAction(
                 getString(R.string.search_try_again),
                 searchButtonClickListener
             )
-            .show()
     }
+
+    private fun showErrorSnackbar() =
+        errorSnackbar.show()
+
+
+    private fun hideErrorSnackbar() =
+        errorSnackbar.dismiss()
 
     private fun cancelInput() {
         hideKeyboard()
