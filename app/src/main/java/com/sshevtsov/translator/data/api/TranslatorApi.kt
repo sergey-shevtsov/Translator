@@ -5,6 +5,7 @@ import com.sshevtsov.translator.data.api.ApiConstants.BASE_ENDPOINT
 import com.sshevtsov.translator.data.api.ApiConstants.SEARCH
 import com.sshevtsov.translator.data.api.model.DataModelResponse
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -16,7 +17,7 @@ import retrofit2.http.Query
 interface TranslatorApi {
 
     @GET(SEARCH)
-    fun search(@Query("search") wordToSearch: String): Observable<List<DataModelResponse>>
+    fun search(@Query("search") wordToSearch: String): Single<List<DataModelResponse>>
 
     companion object {
 
