@@ -4,12 +4,9 @@ import android.util.Log
 import com.sshevtsov.translator.data.api.ApiConstants.BASE_ENDPOINT
 import com.sshevtsov.translator.data.api.ApiConstants.SEARCH
 import com.sshevtsov.translator.data.api.model.DataModelResponse
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -17,7 +14,7 @@ import retrofit2.http.Query
 interface TranslatorApi {
 
     @GET(SEARCH)
-    fun search(@Query("search") wordToSearch: String): Single<List<DataModelResponse>>
+    suspend fun search(@Query("search") wordToSearch: String): List<DataModelResponse>
 
     companion object {
 
@@ -26,7 +23,6 @@ interface TranslatorApi {
                 .baseUrl(BASE_ENDPOINT)
                 .client(createOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build()
                 .create(TranslatorApi::class.java)
 

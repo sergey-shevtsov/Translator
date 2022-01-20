@@ -5,7 +5,7 @@ import com.sshevtsov.translator.domain.model.DataModel
 
 class DataModelMapper(private val meaningsMapper: MeaningsMapper) {
 
-    private fun toDomain(dataModelResponse: DataModelResponse): DataModel {
+    fun toDomain(dataModelResponse: DataModelResponse): DataModel {
 
         requireNotNull(dataModelResponse.meanings)
 
@@ -15,7 +15,4 @@ class DataModelMapper(private val meaningsMapper: MeaningsMapper) {
         )
     }
 
-    fun toDomain(dataModelResponses: List<DataModelResponse>): List<DataModel> {
-        return dataModelResponses.map { toDomain(it) }
-    }
 }

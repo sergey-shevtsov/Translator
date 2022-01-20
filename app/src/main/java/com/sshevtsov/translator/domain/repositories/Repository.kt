@@ -1,9 +1,9 @@
 package com.sshevtsov.translator.domain.repositories
 
-import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.flow.Flow
 
 interface Repository<T : Any> {
 
-    fun getData(word: String, fromRemoteSource: Boolean): Single<List<T>>
+    suspend fun getData(word: String, fromRemoteSource: Boolean): Flow<List<T>>
 
 }

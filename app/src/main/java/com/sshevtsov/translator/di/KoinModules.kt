@@ -8,8 +8,8 @@ import com.sshevtsov.translator.data.repositories.RepositoryImplementation
 import com.sshevtsov.translator.domain.model.DataModel
 import com.sshevtsov.translator.domain.repositories.Repository
 import com.sshevtsov.translator.presentation.search.SearchViewModel
-import com.sshevtsov.translator.util.SchedulersProvider
-import com.sshevtsov.translator.util.SchedulersProviderImplementation
+import com.sshevtsov.translator.util.DefaultDispatcherProvider
+import com.sshevtsov.translator.util.DispatcherProvider
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -20,7 +20,7 @@ val application = module {
     factory { DataModelMapper(get()) }
     single { TranslatorApi.create() }
     single<Repository<DataModel>> { RepositoryImplementation(get(), get()) }
-    factory<SchedulersProvider> { SchedulersProviderImplementation() }
+    factory<DispatcherProvider> { DefaultDispatcherProvider() }
 }
 
 val searchScreen = module {
