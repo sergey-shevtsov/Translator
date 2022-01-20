@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sshevtsov.translator.databinding.FragmentSearchListItemBinding
 import com.sshevtsov.translator.domain.model.DataModel
 
-class SearchAdapter(private var data: List<DataModel>) : RecyclerView.Adapter<SearchViewHolder>() {
+class SearchAdapter(
+    private var data: List<DataModel> = emptyList()
+) : RecyclerView.Adapter<SearchViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(data: List<DataModel>) {
