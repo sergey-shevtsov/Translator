@@ -5,8 +5,10 @@ import com.sshevtsov.translator.data.mappers.DataModelMapper
 import com.sshevtsov.translator.domain.model.DataModel
 import com.sshevtsov.translator.domain.repositories.Repository
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
+@FlowPreview
 class RepositoryImplementation(
     private val translatorApi: TranslatorApi,
     private val dataModelMapper: DataModelMapper
@@ -15,11 +17,9 @@ class RepositoryImplementation(
     override suspend fun getData(word: String, fromRemoteSource: Boolean): Flow<List<DataModel>> {
         return if (fromRemoteSource) {
             flowOf(
-                translatorApi.search(word)
-                    .asFlow()
+                translatorApi.searchAsync(word).await()
                     .filter { !it.meanings.isNullOrEmpty() }
                     .map { dataModelMapper.toDomain(it) }
-                    .toList()
             )
         } else {
             TODO("Room will be here")
