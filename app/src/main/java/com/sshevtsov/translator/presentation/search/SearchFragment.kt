@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.sshevtsov.translator.R
@@ -61,13 +62,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun setupUI() {
-        observeViewModel()
+        observeViewStateUpdates()
         initRecycler()
         setupSearchListener()
     }
 
-    private fun observeViewModel() =
-        viewModel.viewState.observe(viewLifecycleOwner) { updateUI(it) }
+    private fun observeViewStateUpdates() =
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.viewState.collect { updateUI(it) }
+        }
 
     private fun initRecycler() {
         binding.resultRecycler.adapter = adapter

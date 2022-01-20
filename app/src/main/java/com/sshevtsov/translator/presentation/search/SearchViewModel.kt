@@ -1,15 +1,12 @@
 package com.sshevtsov.translator.presentation.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sshevtsov.translator.domain.model.DataModel
 import com.sshevtsov.translator.domain.repositories.Repository
 import com.sshevtsov.translator.util.DispatcherProvider
 import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
@@ -17,16 +14,18 @@ class SearchViewModel(
     private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
-    private val _viewState = MutableLiveData<SearchViewState>(SearchViewState.CallToAction)
+    private val _viewState = MutableStateFlow<SearchViewState>(SearchViewState.CallToAction)
 
-    val viewState: LiveData<SearchViewState> get() = _viewState
+    val viewState: StateFlow<SearchViewState> get() = _viewState.asStateFlow()
 
     fun getData(word: String, isOnline: Boolean) {
 
-        setLoadingState()
         cancelJob()
 
         viewModelScope.launch {
+
+            setLoadingState()
+
             repository.getData(word, isOnline)
                 .flowOn(dispatcherProvider.io())
                 .catch { handleError(it) }
@@ -37,20 +36,20 @@ class SearchViewModel(
         }
     }
 
-    private fun setSuccessState(data: List<DataModel>) {
-        _viewState.value = SearchViewState.Success(data)
+    private suspend fun setSuccessState(data: List<DataModel>) {
+        _viewState.emit(SearchViewState.Success(data))
     }
 
-    private fun setLoadingState() {
-        _viewState.value = SearchViewState.Loading
+    private suspend fun setLoadingState() {
+        _viewState.emit(SearchViewState.Loading)
     }
 
-    private fun setEmptyResultState() {
-        _viewState.value = SearchViewState.EmptyResult
+    private suspend fun setEmptyResultState() {
+        _viewState.emit(SearchViewState.EmptyResult)
     }
 
-    private fun handleError(error: Throwable) {
-        _viewState.value = SearchViewState.Error(error)
+    private suspend fun handleError(error: Throwable) {
+        _viewState.emit(SearchViewState.Error(error))
     }
 
     private fun cancelJob() {
