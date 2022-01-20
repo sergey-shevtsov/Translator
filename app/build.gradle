@@ -39,6 +39,8 @@ android {
 dependencies {
     //Kotlin
     implementation 'androidx.core:core-ktx:1.7.0'
+    //Kotlin Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
     //AppCompat
     implementation 'androidx.appcompat:appcompat:1.4.1'
     //UI
@@ -48,6 +50,11 @@ dependencies {
     def lifecycle_version = "2.4.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    //Koin
+    def koin_version = "3.1.5"
+    implementation "io.insert-koin:koin-core:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-android-compat:$koin_version"
     //Dagger 2
     def dagger_version = "2.40.5"
     implementation "com.google.dagger:dagger:$dagger_version"
