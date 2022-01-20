@@ -2,10 +2,9 @@ package com.sshevtsov.translator.data.mappers
 
 import com.sshevtsov.translator.data.api.model.MeaningsResponse
 import com.sshevtsov.translator.domain.model.Meanings
+import javax.inject.Inject
 
-class MeaningsMapper {
-
-    private val translationMapper = TranslationMapper()
+class MeaningsMapper @Inject constructor(private val translationMapper: TranslationMapper) {
 
     private fun toDomain(meaningsResponse: MeaningsResponse): Meanings {
 
