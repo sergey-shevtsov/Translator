@@ -9,9 +9,8 @@ import com.sshevtsov.translator.util.SchedulersProvider
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
-import javax.inject.Inject
 
-class SearchViewModel @Inject constructor(
+class SearchViewModel(
     private val repository: Repository<DataModel>,
     private val schedulersProvider: SchedulersProvider
 ) : ViewModel() {

@@ -6,9 +6,8 @@ import com.sshevtsov.translator.domain.model.DataModel
 import com.sshevtsov.translator.domain.repositories.Repository
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import javax.inject.Inject
 
-class RepositoryImplementation @Inject constructor(
+class RepositoryImplementation(
     private val translatorApi: TranslatorApi,
     private val dataModelMapper: DataModelMapper
 ) : Repository<DataModel> {

@@ -1,14 +1,19 @@
 package com.sshevtsov.translator.application
 
 import android.app.Application
-import com.sshevtsov.translator.di.AppComponent
-import com.sshevtsov.translator.di.DaggerAppComponent
+import com.sshevtsov.translator.di.application
+import com.sshevtsov.translator.di.searchScreen
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class App : Application() {
 
-    companion object {
-        val component: AppComponent by lazy {
-            DaggerAppComponent.builder().build()
+    override fun onCreate() {
+        super.onCreate()
+
+        startKoin {
+            androidContext(this@App)
+            modules(listOf(application, searchScreen))
         }
     }
 

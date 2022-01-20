@@ -6,27 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.sshevtsov.translator.R
-import com.sshevtsov.translator.application.App
 import com.sshevtsov.translator.databinding.FragmentSearchBinding
 import com.sshevtsov.translator.presentation.clearFocus
 import com.sshevtsov.translator.presentation.hideKeyboard
 import com.sshevtsov.translator.presentation.search.adapter.SearchAdapter
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel: SearchViewModel by viewModels { viewModelFactory }
+    private val viewModel: SearchViewModel by viewModel()
 
     private val adapter by lazy { SearchAdapter() }
 
@@ -62,8 +56,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        App.component.inject(this)
 
         setupUI()
     }

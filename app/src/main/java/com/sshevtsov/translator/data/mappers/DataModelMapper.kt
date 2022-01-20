@@ -2,9 +2,8 @@ package com.sshevtsov.translator.data.mappers
 
 import com.sshevtsov.translator.data.api.model.DataModelResponse
 import com.sshevtsov.translator.domain.model.DataModel
-import javax.inject.Inject
 
-class DataModelMapper @Inject constructor(private val meaningsMapper: MeaningsMapper) {
+class DataModelMapper(private val meaningsMapper: MeaningsMapper) {
 
     private fun toDomain(dataModelResponse: DataModelResponse): DataModel {
 
