@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -14,8 +15,12 @@ import com.sshevtsov.translator.databinding.FragmentSearchBinding
 import com.sshevtsov.translator.presentation.clearFocus
 import com.sshevtsov.translator.presentation.hideKeyboard
 import com.sshevtsov.translator.presentation.search.adapter.SearchAdapter
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@FlowPreview
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private var _binding: FragmentSearchBinding? = null
@@ -24,6 +29,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private val viewModel: SearchViewModel by viewModel()
 
     private val adapter by lazy { SearchAdapter() }
+
+    private val queryStateFlow = MutableStateFlow("")
 
     private val searchButtonClickListener by lazy {
         View.OnClickListener {
@@ -65,6 +72,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         observeViewStateUpdates()
         initRecycler()
         setupSearchListener()
+        setupSearchStateFlow()
     }
 
     private fun observeViewStateUpdates() =
@@ -87,6 +95,30 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         binding.searchEditText.setOnEditorActionListener { view, _, _ ->
             searchButtonClickListener.onClick(view)
             true
+        }
+    }
+
+    private fun setupSearchStateFlow() {
+        binding.searchEditText.doOnTextChanged { text, _, _, _ ->
+            queryStateFlow.value = text.toString()
+        }
+
+        lifecycleScope.launch {
+            queryStateFlow
+                .debounce(500)
+                .filter { query ->
+                    if (query.isEmpty()) {
+                        binding.searchEditText.setText("")
+                        return@filter false
+                    } else {
+                        return@filter true
+                    }
+                }
+                .distinctUntilChanged()
+                .collect { query ->
+                    viewModel.getData(query, true)
+                    hideErrorSnackbar()
+                }
         }
     }
 
