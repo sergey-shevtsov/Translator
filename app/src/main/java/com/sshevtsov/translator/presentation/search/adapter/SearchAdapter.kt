@@ -6,9 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sshevtsov.translator.databinding.FragmentSearchListItemBinding
 import com.sshevtsov.translator.domain.model.DataModel
+import com.sshevtsov.translator.domain.model.Meanings
 
 class SearchAdapter(
-    private var data: List<DataModel> = emptyList()
+    private var data: List<DataModel> = emptyList(),
+    private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<SearchViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
@@ -27,8 +29,12 @@ class SearchAdapter(
         )
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) =
-        holder.bind(data[position])
+        holder.bind(data[position], listener)
 
     override fun getItemCount(): Int = data.size
+
+    fun interface OnItemClickListener {
+        fun onClick(dataModel: DataModel)
+    }
 
 }

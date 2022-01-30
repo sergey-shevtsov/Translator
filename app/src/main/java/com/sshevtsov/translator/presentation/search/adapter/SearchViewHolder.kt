@@ -8,9 +8,12 @@ class SearchViewHolder(
     private val binding: FragmentSearchListItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(dataModel: DataModel) {
+    fun bind(dataModel: DataModel, listener: SearchAdapter.OnItemClickListener) {
         binding.titleTextView.text = dataModel.text
         binding.translationTextView.text = dataModel.meanings[0].translation.text
+        binding.root.setOnClickListener {
+            listener.onClick(dataModel)
+        }
     }
 
 }

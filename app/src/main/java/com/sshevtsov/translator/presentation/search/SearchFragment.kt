@@ -8,10 +8,13 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.sshevtsov.translator.R
 import com.sshevtsov.translator.databinding.FragmentSearchBinding
+import com.sshevtsov.translator.domain.model.DataModel
+import com.sshevtsov.translator.domain.model.Meanings
 import com.sshevtsov.translator.presentation.clearFocus
 import com.sshevtsov.translator.presentation.hideKeyboard
 import com.sshevtsov.translator.presentation.search.adapter.SearchAdapter
@@ -21,14 +24,14 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @FlowPreview
-class SearchFragment : Fragment(R.layout.fragment_search) {
+class SearchFragment : Fragment(R.layout.fragment_search), SearchAdapter.OnItemClickListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: SearchViewModel by viewModel()
 
-    private val adapter by lazy { SearchAdapter() }
+    private val adapter by lazy { SearchAdapter(listener = this) }
 
     private val queryStateFlow = MutableStateFlow("")
 
@@ -64,7 +67,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupUI()
     }
 
@@ -163,6 +165,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onClick(dataModel: DataModel) {
+        findNavController().navigate(
+            SearchFragmentDirections.actionSearchFragmentToDetailFragment(
+                dataModel = dataModel,
+                label = dataModel.text
+            )
+        )
     }
 
 }
