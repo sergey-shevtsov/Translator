@@ -1,11 +1,14 @@
 package com.sshevtsov.translator.presentation
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.sshevtsov.translator.R
+import com.sshevtsov.translator.presentation.search.SearchFragmentDirections
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +23,22 @@ class MainActivity : AppCompatActivity() {
         navController = navHost.navController
 
         NavigationUI.setupActionBarWithNavController(this, navController)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.action_bar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.history -> {
+                navController.navigate(
+                    SearchFragmentDirections.actionSearchFragmentToHistoryFragment()
+                )
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean =

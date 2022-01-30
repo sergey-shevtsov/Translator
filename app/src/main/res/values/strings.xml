@@ -7,4 +7,5 @@
     <string name="search_error_text">Произошла ошибка</string>
     <string name="search_try_again">Еще раз</string>
     <string name="play_audio">Воспроизвести аудио</string>
+    <string name="action_history">История запросов</string>
 </resources>
