@@ -1,5 +1,7 @@
 package com.sshevtsov.translator.presentation.detail
 
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +42,14 @@ class DetailFragment : Fragment() {
             .placeholder(R.drawable.ic_no_photo_vector)
             .apply(RequestOptions().centerCrop())
             .into(binding.previewImageView)
+
+        binding.audioButton.setOnClickListener {
+            val mediaPlayer = MediaPlayer.create(
+                requireContext(),
+                Uri.parse("https:${dataModel.meanings[0].soundUrl}")
+            )
+            mediaPlayer.start()
+        }
     }
 
     override fun onDestroyView() {
