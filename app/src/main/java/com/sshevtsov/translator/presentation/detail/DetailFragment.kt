@@ -21,6 +21,13 @@ class DetailFragment : Fragment() {
     private val args by navArgs<DetailFragmentArgs>()
     private val dataModel by lazy { args.dataModel }
 
+    private val mediaPlayer by lazy {
+        MediaPlayer.create(
+            requireContext(),
+            Uri.parse("https:${dataModel.meanings[0].soundUrl}")
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,11 +51,9 @@ class DetailFragment : Fragment() {
             .into(binding.previewImageView)
 
         binding.audioButton.setOnClickListener {
-            val mediaPlayer = MediaPlayer.create(
-                requireContext(),
-                Uri.parse("https:${dataModel.meanings[0].soundUrl}")
-            )
-            mediaPlayer.start()
+            if (!mediaPlayer.isPlaying) {
+                mediaPlayer.start()
+            }
         }
     }
 
