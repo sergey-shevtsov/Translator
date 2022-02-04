@@ -2,7 +2,7 @@ package com.sshevtsov.translator.data.repositories
 
 import com.sshevtsov.translator.data.api.TranslatorApi
 import com.sshevtsov.translator.data.mappers.DataModelMapper
-import com.sshevtsov.translator.domain.model.DataModel
+import com.sshevtsov.translator.domain.model.search.DataModel
 import com.sshevtsov.translator.domain.repositories.Repository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow

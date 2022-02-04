@@ -1,6 +1,6 @@
 package com.sshevtsov.translator.presentation.search
 
-import com.sshevtsov.translator.domain.model.DataModel
+import com.sshevtsov.translator.domain.model.search.DataModel
 
 sealed class SearchViewState {
 

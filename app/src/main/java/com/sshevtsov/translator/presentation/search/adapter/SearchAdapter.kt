@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sshevtsov.translator.databinding.FragmentSearchListItemBinding
-import com.sshevtsov.translator.domain.model.DataModel
+import com.sshevtsov.translator.domain.model.search.DataModel
 
 class SearchAdapter(
     private var data: List<DataModel> = emptyList(),

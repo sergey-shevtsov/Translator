@@ -2,7 +2,7 @@ package com.sshevtsov.translator.presentation.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sshevtsov.translator.domain.model.DataModel
+import com.sshevtsov.translator.domain.model.search.DataModel
 import com.sshevtsov.translator.domain.repositories.Repository
 import com.sshevtsov.translator.util.DispatcherProvider
 import kotlinx.coroutines.cancelChildren

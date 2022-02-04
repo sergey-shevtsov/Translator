@@ -3,11 +3,12 @@ package com.sshevtsov.translator.di
 import androidx.room.Room
 import com.sshevtsov.translator.data.api.TranslatorApi
 import com.sshevtsov.translator.data.mappers.DataModelMapper
+import com.sshevtsov.translator.data.mappers.HistoryMapper
 import com.sshevtsov.translator.data.mappers.MeaningsMapper
 import com.sshevtsov.translator.data.mappers.TranslationMapper
 import com.sshevtsov.translator.data.repositories.RepositoryImplementation
 import com.sshevtsov.translator.data.room.HistoryDatabase
-import com.sshevtsov.translator.domain.model.DataModel
+import com.sshevtsov.translator.domain.model.search.DataModel
 import com.sshevtsov.translator.domain.repositories.Repository
 import com.sshevtsov.translator.presentation.search.SearchViewModel
 import com.sshevtsov.translator.util.DefaultDispatcherProvider
@@ -36,4 +37,5 @@ val searchScreen = module {
 
 val historyScreen = module {
 
+    single { HistoryMapper() }
 }

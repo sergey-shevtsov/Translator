@@ -1,9 +1,8 @@
 package com.sshevtsov.translator.presentation.search.adapter
 
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.sshevtsov.translator.databinding.FragmentSearchListItemBinding
-import com.sshevtsov.translator.domain.model.DataModel
+import com.sshevtsov.translator.domain.model.search.DataModel
 
 class SearchViewHolder(
     private val binding: FragmentSearchListItemBinding
