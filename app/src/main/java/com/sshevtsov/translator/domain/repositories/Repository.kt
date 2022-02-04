@@ -4,6 +4,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface Repository<T : Any> {
 
-    suspend fun getData(word: String, fromRemoteSource: Boolean): Flow<List<T>>
+    suspend fun getData(word: String): Flow<List<T>>
 
 }
