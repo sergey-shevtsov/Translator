@@ -18,7 +18,7 @@ class SearchViewModel(
 
     val viewState: StateFlow<SearchViewState> get() = _viewState.asStateFlow()
 
-    fun getData(word: String, isOnline: Boolean) {
+    fun getData(word: String) {
 
         cancelJob()
 
@@ -26,7 +26,7 @@ class SearchViewModel(
 
             setLoadingState()
 
-            repository.getData(word, isOnline)
+            repository.getData(word)
                 .flowOn(dispatcherProvider.io())
                 .catch { handleError(it) }
                 .collect {

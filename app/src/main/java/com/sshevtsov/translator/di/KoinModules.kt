@@ -13,6 +13,7 @@ import com.sshevtsov.translator.domain.model.history.History
 import com.sshevtsov.translator.domain.model.search.DataModel
 import com.sshevtsov.translator.domain.repositories.Repository
 import com.sshevtsov.translator.domain.repositories.RepositoryLocal
+import com.sshevtsov.translator.presentation.history.HistoryViewModel
 import com.sshevtsov.translator.presentation.search.SearchViewModel
 import com.sshevtsov.translator.util.DefaultDispatcherProvider
 import com.sshevtsov.translator.util.DispatcherProvider
@@ -39,4 +40,5 @@ val searchScreen = module {
 val historyScreen = module {
     single<RepositoryLocal<History>> { RepositoryLocalImpl(get(), get()) }
     single { HistoryMapper() }
+    viewModel { HistoryViewModel(get(), get()) }
 }

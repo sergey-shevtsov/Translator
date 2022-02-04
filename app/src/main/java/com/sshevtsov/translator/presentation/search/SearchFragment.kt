@@ -47,7 +47,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private val searchButtonClickListener by lazy {
         View.OnClickListener {
             //So far isOnline is always true
-            viewModel.getData(binding.searchEditText.text.toString(), true)
+            viewModel.getData(binding.searchEditText.text.toString())
             hideErrorSnackbar()
             cancelInput()
         }
@@ -127,7 +127,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
                 .distinctUntilChanged()
                 .collect { query ->
-                    viewModel.getData(query, true)
+                    viewModel.getData(query)
                     hideErrorSnackbar()
                 }
         }
