@@ -8,4 +8,6 @@
     <string name="search_try_again">Еще раз</string>
     <string name="play_audio">Воспроизвести аудио</string>
     <string name="action_history">История запросов</string>
+    <string name="empty_history_message">В истории пока ничего нет…</string>
+    <string name="delete">Delete</string>
 </resources>

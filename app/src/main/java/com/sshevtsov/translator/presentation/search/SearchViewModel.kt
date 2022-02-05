@@ -2,8 +2,11 @@ package com.sshevtsov.translator.presentation.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sshevtsov.translator.domain.model.history.History
 import com.sshevtsov.translator.domain.model.search.DataModel
 import com.sshevtsov.translator.domain.repositories.Repository
+import com.sshevtsov.translator.domain.repositories.RepositoryLocal
+import com.sshevtsov.translator.presentation.mappers.UiHistoryMapper
 import com.sshevtsov.translator.util.DispatcherProvider
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.*
@@ -11,7 +14,9 @@ import kotlinx.coroutines.launch
 
 class SearchViewModel(
     private val repository: Repository<DataModel>,
-    private val dispatcherProvider: DispatcherProvider
+    private val localRepository: RepositoryLocal<History>,
+    private val dispatcherProvider: DispatcherProvider,
+    private val uiHistoryMapper: UiHistoryMapper
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow<SearchViewState>(SearchViewState.CallToAction)
@@ -31,12 +36,13 @@ class SearchViewModel(
                 .catch { handleError(it) }
                 .collect {
                     if (it.isEmpty()) setEmptyResultState()
-                    else setSuccessState(it)
+                    else setSuccessState(it, word)
                 }
         }
     }
 
-    private suspend fun setSuccessState(data: List<DataModel>) {
+    private suspend fun setSuccessState(data: List<DataModel>, word: String) {
+        localRepository.saveToDatabase(uiHistoryMapper.toDomain(word))
         _viewState.emit(SearchViewState.Success(data))
     }
 

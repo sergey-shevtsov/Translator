@@ -8,4 +8,6 @@ interface RepositoryLocal<T : Any> {
 
     suspend fun saveToDatabase(data: T)
 
+    suspend fun clear()
+
 }

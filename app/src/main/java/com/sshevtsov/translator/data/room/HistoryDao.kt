@@ -24,4 +24,7 @@ interface HistoryDao {
     @Delete
     suspend fun delete(entity: HistoryEntity)
 
+    @Query("DELETE FROM HistoryTable")
+    suspend fun clear()
+
 }

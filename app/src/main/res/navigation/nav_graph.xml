@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="dataModel"
-            app:argType="com.sshevtsov.translator.domain.model.DataModel" />
+            app:argType="com.sshevtsov.translator.domain.model.search.DataModel" />
         <argument
             android:name="label"
             app:argType="string"

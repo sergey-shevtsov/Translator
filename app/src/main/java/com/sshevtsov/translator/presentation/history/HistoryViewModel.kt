@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.sshevtsov.translator.domain.model.history.History
 import com.sshevtsov.translator.domain.repositories.RepositoryLocal
 import com.sshevtsov.translator.util.DispatcherProvider
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -31,6 +32,13 @@ class HistoryViewModel(
                         emitSuccessState(history)
                     }
                 }
+        }
+    }
+
+    fun clearHistory() {
+        viewModelScope.launch {
+            repositoryLocal.clear()
+            fetchHistory()
         }
     }
 

@@ -14,6 +14,7 @@ import com.sshevtsov.translator.domain.model.search.DataModel
 import com.sshevtsov.translator.domain.repositories.Repository
 import com.sshevtsov.translator.domain.repositories.RepositoryLocal
 import com.sshevtsov.translator.presentation.history.HistoryViewModel
+import com.sshevtsov.translator.presentation.mappers.UiHistoryMapper
 import com.sshevtsov.translator.presentation.search.SearchViewModel
 import com.sshevtsov.translator.util.DefaultDispatcherProvider
 import com.sshevtsov.translator.util.DispatcherProvider
@@ -25,6 +26,7 @@ import org.koin.dsl.module
 val application = module {
     single { Room.databaseBuilder(get(), HistoryDatabase::class.java, "HistoryDB").build() }
     single { get<HistoryDatabase>().historyDao() }
+    factory { UiHistoryMapper() }
     factory { TranslationMapper() }
     factory { MeaningsMapper(get()) }
     factory { DataModelMapper(get()) }
@@ -34,11 +36,11 @@ val application = module {
 }
 
 val searchScreen = module {
-    viewModel { SearchViewModel(get(), get()) }
+    viewModel { SearchViewModel(get(), get(), get(), get()) }
 }
 
 val historyScreen = module {
-    single<RepositoryLocal<History>> { RepositoryLocalImpl(get(), get()) }
+    single<RepositoryLocal<History>> { RepositoryLocalImpl(get(), get(), get()) }
     single { HistoryMapper() }
     viewModel { HistoryViewModel(get(), get()) }
 }
