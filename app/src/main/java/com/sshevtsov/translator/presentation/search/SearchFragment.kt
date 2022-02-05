@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.sshevtsov.translator.R
@@ -28,14 +29,25 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private val viewModel: SearchViewModel by viewModel()
 
-    private val adapter by lazy { SearchAdapter() }
+    private val adapter by lazy {
+        SearchAdapter(
+            listener = { dataModel ->
+                findNavController().navigate(
+                    SearchFragmentDirections.actionSearchFragmentToDetailFragment(
+                        dataModel = dataModel,
+                        label = dataModel.text
+                    )
+                )
+            }
+        )
+    }
 
     private val queryStateFlow = MutableStateFlow("")
 
     private val searchButtonClickListener by lazy {
         View.OnClickListener {
             //So far isOnline is always true
-            viewModel.getData(binding.searchEditText.text.toString(), true)
+            viewModel.getData(binding.searchEditText.text.toString())
             hideErrorSnackbar()
             cancelInput()
         }
@@ -64,7 +76,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupUI()
     }
 
@@ -116,7 +127,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
                 .distinctUntilChanged()
                 .collect { query ->
-                    viewModel.getData(query, true)
+                    viewModel.getData(query)
                     hideErrorSnackbar()
                 }
         }

@@ -1,7 +1,7 @@
 package com.sshevtsov.translator.data.mappers
 
 import com.sshevtsov.translator.data.api.model.DataModelResponse
-import com.sshevtsov.translator.domain.model.DataModel
+import com.sshevtsov.translator.domain.model.search.DataModel
 
 class DataModelMapper(private val meaningsMapper: MeaningsMapper) {
 

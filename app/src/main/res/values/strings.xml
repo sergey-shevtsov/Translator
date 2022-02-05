@@ -1,9 +1,13 @@
 <resources>
-    <string name="app_name">Translator</string>
+    <string name="app_name">Переводчик</string>
     <string name="search_input_layout_hint">Введите слово для перевода</string>
     <string name="search_icon_content_description">Поиск</string>
     <string name="search_empty_result_text">По указанному слову ничего не найдено.\nПопробуйте изменить запрос.</string>
     <string name="search_call_to_action_text">Введите слово в поле вверху экрана для поиска.</string>
     <string name="search_error_text">Произошла ошибка</string>
     <string name="search_try_again">Еще раз</string>
+    <string name="play_audio">Воспроизвести аудио</string>
+    <string name="action_history">История запросов</string>
+    <string name="empty_history_message">В истории пока ничего нет…</string>
+    <string name="delete">Delete</string>
 </resources>
